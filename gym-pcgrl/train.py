@@ -70,7 +70,7 @@ def main(game, representation, experiment, steps, n_cpu, render, logging, **kwar
     global log_dir
     if not resume:
         n = n + 1
-    log_dir = 'runs/{}_{}_{}'.format(exp_name, n, 'log')
+    log_dir = '/home-mscluster/lkerker/RL-Research/gym-pcgrl/runs/{}_{}_{}'.format(exp_name, n, 'log')
     if not resume:
         os.mkdir(log_dir)
     else:

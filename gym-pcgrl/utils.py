@@ -77,7 +77,7 @@ def get_exp_name(game, representation, experiment, **kwargs):
     return exp_name
 
 def max_exp_idx(exp_name):
-    log_dir = os.path.join("./runs", exp_name)
+    log_dir = os.path.join("/home-mscluster/lkerker/RL-Research/gym-pcgrl/runs", exp_name)
     log_files = glob.glob('{}*'.format(log_dir))
     if len(log_files) == 0:
         n = 0
