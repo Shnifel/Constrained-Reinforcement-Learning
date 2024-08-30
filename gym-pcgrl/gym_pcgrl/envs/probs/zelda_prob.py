@@ -25,7 +25,7 @@ class ZeldaProblem(Problem):
         self._max_enemies = 9
 
         self._target_enemy_dist = 4
-        self._target_path = 16
+        self._target_path = 21
 
         self._rewards = {
             "player": 5,
@@ -99,30 +99,30 @@ class ZeldaProblem(Problem):
         enemies.extend(map_locations["spider"])
         enemies.extend(map_locations["bat"])
         enemies.extend(map_locations["scorpion"])
-        if len(enemies) > 0 and map_stats["regions"] == 1:
+        # if len(enemies) > 0 and map_stats["regions"] == 1:
                     
-            enemies_near_key = 0
+        #     enemies_near_key = 0
             
             
-            if map_stats["key"] == 1:
-                k_x,k_y = map_locations["key"][0]
-                dikjstraK,k_ = run_dikjstra(k_x, k_y, map, ["empty","key", "bat", "spider", "scorpion"])
-                for e_x,e_y in enemies:
-                    #print("Key POS: ",dikjstraK[e_y][e_x])
-                    if dikjstraK[e_y][e_x] > 0 and dikjstraK[e_y][e_x] < 4:
-                        enemies_near_key+=1
-                map_stats["enemies-near-key"] = enemies_near_key
+        #     if map_stats["key"] == 1:
+        #         k_x,k_y = map_locations["key"][0]
+        #         dikjstraK,k_ = run_dikjstra(k_x, k_y, map, ["empty","key", "bat", "spider", "scorpion"])
+        #         for e_x,e_y in enemies:
+        #             #print("Key POS: ",dikjstraK[e_y][e_x])
+        #             if dikjstraK[e_y][e_x] > 0 and dikjstraK[e_y][e_x] < 4:
+        #                 enemies_near_key+=1
+        #         map_stats["enemies-near-key"] = enemies_near_key
 
-            enemies_near_door = 0
+        #     enemies_near_door = 0
             
-            if map_stats["door"]==1:
-                d_x,d_y = map_locations["door"][0]    
-                dikjstra,_ = run_dikjstra(d_x, d_y, map, ["empty", "door", "bat", "spider", "scorpion"])
-                for e_x,e_y in enemies:
-                    #print("door POS: ",dikjstra[e_y][e_x])
-                    if dikjstra[e_y][e_x] > 0 and dikjstra[e_y][e_x] < 4:
-                        enemies_near_door+=1
-            map_stats["enemies-near-door"] = enemies_near_door
+        #     if map_stats["door"]==1:
+        #         d_x,d_y = map_locations["door"][0]    
+        #         dikjstra,_ = run_dikjstra(d_x, d_y, map, ["empty", "door", "bat", "spider", "scorpion"])
+        #         for e_x,e_y in enemies:
+        #             #print("door POS: ",dikjstra[e_y][e_x])
+        #             if dikjstra[e_y][e_x] > 0 and dikjstra[e_y][e_x] < 4:
+        #                 enemies_near_door+=1
+        #     map_stats["enemies-near-door"] = enemies_near_door
 
         if map_stats["player"] == 1 and map_stats["regions"] == 1:
             p_x,p_y = map_locations["player"][0]
@@ -165,12 +165,12 @@ class ZeldaProblem(Problem):
             "player": get_range_reward(new_stats["player"], old_stats["player"], 1, 1),
             "key": get_range_reward(new_stats["key"], old_stats["key"], 1, 1),
             "door": get_range_reward(new_stats["door"], old_stats["door"], 1, 1),
-            "enemies": get_range_reward(new_stats["enemies"], old_stats["enemies"], 5, self._max_enemies),
+            "enemies": get_range_reward(new_stats["enemies"], old_stats["enemies"], 6, self._max_enemies),
             "regions": get_range_reward(new_stats["regions"], old_stats["regions"], 1, 1),
             "nearest-enemy": get_range_reward(new_stats["nearest-enemy"], old_stats["nearest-enemy"], self._target_enemy_dist, np.inf),
-            "path-length": get_range_reward(new_stats["path-length"],old_stats["path-length"], 10, 17),
-            "enemies-near-key": get_range_reward(new_stats["enemies-near-key"],old_stats["enemies-near-key"],1, 4),
-            "enemies-near-door": get_range_reward(new_stats["enemies-near-door"],old_stats["enemies-near-door"],1, 4)
+            "path-length": get_range_reward(new_stats["path-length"],old_stats["path-length"], 21, 36),
+            # "enemies-near-key": get_range_reward(new_stats["enemies-near-key"],old_stats["enemies-near-key"],1, 4),
+            # "enemies-near-door": get_range_reward(new_stats["enemies-near-door"],old_stats["enemies-near-door"],1, 4)
         }
         #calculate the total reward
        
@@ -183,9 +183,9 @@ class ZeldaProblem(Problem):
             rewards["enemies"] * self._rewards["enemies"] +\
             rewards["regions"] * self._rewards["regions"] +\
             rewards["nearest-enemy"] * self._rewards["nearest-enemy"] +\
-            rewards["path-length"] * self._rewards["path-length"] +\
-            rewards["enemies-near-key"] * self._rewards["enemies-near-key"] +\
-            rewards["enemies-near-door"] * self._rewards["enemies-near-door"]
+            rewards["path-length"] * self._rewards["path-length"] 
+            # rewards["enemies-near-key"] * self._rewards["enemies-near-key"] +\
+            # rewards["enemies-near-door"] * self._rewards["enemies-near-door"]
         # print("Player Reward:",rewards["player"])
         # print("key Reward:",rewards["key"])
         # print("door Reward:",rewards["door"])
