@@ -99,8 +99,8 @@ representation = 'wide'
 experiment = None
 steps = 1e8
 render = False
-logging = False
-n_cpu = 5
+logging = True
+n_cpu = 6
 kwargs = {
     'resume': False
 }
