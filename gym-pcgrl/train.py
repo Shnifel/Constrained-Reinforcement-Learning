@@ -28,20 +28,20 @@ def callback(_locals, _globals):
         if len(x) > 100:
            #pdb.set_trace()
             mean_reward = np.mean(y[-100:])
-            print(x[-1], 'timesteps')
-            print("Best mean reward: {:.2f} - Last mean reward per episode: {:.2f}".format(best_mean_reward, mean_reward))
+        #    print(x[-1], 'timesteps')
+        #    print("Best mean reward: {:.2f} - Last mean reward per episode: {:.2f}".format(best_mean_reward, mean_reward))
 
             # New best model, we save the agent here
             if mean_reward > best_mean_reward:
                 best_mean_reward = mean_reward
                 # Example for saving best model
-                print("Saving new best model")
+        #        print("Saving new best model")
                 _locals['self'].save(os.path.join(log_dir, 'best_model.pkl'))
             else:
-                print("Saving latest model")
+        #        print("Saving latest model")
                 _locals['self'].save(os.path.join(log_dir, 'latest_model.pkl'))
         else:
-            print('{} monitor entries'.format(len(x)))
+        #    print('{} monitor entries'.format(len(x)))
             pass
     n_steps += 1
     # Returning False will stop training early
@@ -99,10 +99,10 @@ representation = 'wide'
 experiment = None
 steps = 1e8
 render = False
-logging = True
-n_cpu = 1
+logging = False
+n_cpu = 2
 kwargs = {
-    'resume': False
+    'resume': True
 }
 
 if __name__ == '__main__':
