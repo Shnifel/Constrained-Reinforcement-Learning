@@ -83,9 +83,9 @@ def main(game, representation, experiment, steps, n_cpu, render, logging, **kwar
     used_dir = log_dir
     if not logging:
         used_dir = None
-    env = make_vec_envs(env_name, representation, log_dir, n_cpu, **kwargs)
+    env = make_vec_envs(env_name, representation, used_dir, n_cpu, **kwargs)
     if not resume or model is None:
-        model = PPO2(policy, env, verbose=1, tensorboard_log="./runs")
+        model = PPO2(policy, env, verbose=0, tensorboard_log="./runs")
     else:
         model.set_env(env)
     if not logging:
@@ -99,7 +99,7 @@ representation = 'wide'
 experiment = None
 steps = 1e8
 render = False
-logging = True
+logging = False
 n_cpu = 1
 kwargs = {
     'resume': False
