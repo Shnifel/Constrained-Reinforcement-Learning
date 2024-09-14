@@ -10,11 +10,25 @@ from stable_baselines.results_plotter import load_results, ts2xy
 import tensorflow as tf
 import numpy as np
 import os
+import json
 
 n_steps = 0
 log_dir = './'
 best_mean_reward, n_steps = -np.inf, 0
 model=""
+
+def save_best_mean_reward(log_dir, best_mean_reward):
+    with open(os.path.join(log_dir, 'best_mean_reward.json'), 'w') as f:
+        json.dump({"best_mean_reward": best_mean_reward}, f)
+
+def load_best_mean_reward(log_dir):
+    try:
+        with open(os.path.join(log_dir, 'best_mean_reward.json'), 'r') as f:
+            data = json.load(f)
+            return data['best_mean_reward']
+    except FileNotFoundError:
+        return -np.inf  # If no file exists, return the default value
+    
 def callback(_locals, _globals):
     """
     Callback called at each step (for DQN an others) or after n steps (see ACER or PPO2)
@@ -37,6 +51,7 @@ def callback(_locals, _globals):
                 # Example for saving best model
         #        print("Saving new best model")
                 _locals['self'].save(os.path.join(log_dir, 'best_model.pkl'))
+                save_best_mean_reward(log_dir, best_mean_reward)
             else:
         #        print("Saving latest model")
                 _locals['self'].save(os.path.join(log_dir, 'latest_model.pkl'))
@@ -75,6 +90,7 @@ def main(game, representation, experiment, steps, n_cpu, render, logging, **kwar
         os.mkdir(log_dir)
     else:
         model = load_model(log_dir)
+        best_mean_reward = load_best_mean_reward(log_dir)
     kwargs = {
         **kwargs,
         'render_rank': 0,
@@ -102,7 +118,7 @@ render = False
 logging = True
 n_cpu = 1
 kwargs = {
-    'resume': False
+    'resume': True
 }
 
 if __name__ == '__main__':
