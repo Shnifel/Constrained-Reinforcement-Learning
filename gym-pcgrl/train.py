@@ -129,7 +129,7 @@ render = False
 logging = True
 n_cpu = 1
 kwargs = {
-    'resume': False
+    'resume': True
 }
 
 if __name__ == '__main__':
