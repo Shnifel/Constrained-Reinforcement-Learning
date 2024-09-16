@@ -92,8 +92,8 @@ def main(game, representation, experiment, steps, n_cpu, render, logging, **kwar
     else:
         model = load_model(log_dir)
         best_mean_reward = load_best_mean_reward(log_dir)
-        source_file = "0.monitor.csv"
-        destination = "copy.csv"
+        source_file = "/home-mscluster/lkerker/RL-Research/gym-pcgrl/runs/zelda_wide_wide2_log/0.monitor.csv"
+        destination = "/home-mscluster/lkerker/RL-Research/gym-pcgrl/runs/zelda_wide_wide2_log/copy.csv"
         with open(source_file, "r") as src, open(destination, "a", newline="") as dst:
             reader = csv.reader(src)
             writer = csv.writer(dst)
