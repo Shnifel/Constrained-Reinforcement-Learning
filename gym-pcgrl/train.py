@@ -11,6 +11,7 @@ import tensorflow as tf
 import numpy as np
 import os
 import json
+import csv
 
 n_steps = 0
 log_dir = './'
@@ -91,6 +92,16 @@ def main(game, representation, experiment, steps, n_cpu, render, logging, **kwar
     else:
         model = load_model(log_dir)
         best_mean_reward = load_best_mean_reward(log_dir)
+        source_file = "0.monitor.csv"
+        destination = "copy.csv"
+        with open(source_file, "r") as src, open(destination, "a", newline="") as dst:
+            reader = csv.reader(src)
+            writer = csv.writer(dst)
+
+            for row in reader:
+                writer.writerow(row)
+        src.close()
+        dst.close()
     kwargs = {
         **kwargs,
         'render_rank': 0,
@@ -118,7 +129,7 @@ render = False
 logging = True
 n_cpu = 1
 kwargs = {
-    'resume': True
+    'resume': False
 }
 
 if __name__ == '__main__':
