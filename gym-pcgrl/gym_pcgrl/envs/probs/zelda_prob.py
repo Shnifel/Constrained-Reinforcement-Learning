@@ -22,17 +22,17 @@ class ZeldaProblem(Problem):
         self._border_tile = "solid"
 
         #self._max_enemies = 5
-        self._max_enemies = 9
+        self._max_enemies = 5
 
         self._target_enemy_dist = 4
-        self._target_path = 21
+        self._target_path = 16
 
         self._rewards = {
-            "player": 5,
-            "key": 5,
-            "door": 5,
+            "player": 3,
+            "key": 3,
+            "door": 3,
             "regions": 5,
-            "enemies": 3,
+            "enemies": 1,
             "nearest-enemy": 2,
             "path-length": 3,
             "enemies-near-key":3,
@@ -168,7 +168,7 @@ class ZeldaProblem(Problem):
             "enemies": get_range_reward(new_stats["enemies"], old_stats["enemies"], 6, self._max_enemies),
             "regions": get_range_reward(new_stats["regions"], old_stats["regions"], 1, 1),
             "nearest-enemy": get_range_reward(new_stats["nearest-enemy"], old_stats["nearest-enemy"], self._target_enemy_dist, np.inf),
-            "path-length": get_range_reward(new_stats["path-length"],old_stats["path-length"], 21, 36),
+            "path-length": get_range_reward(new_stats["path-length"],old_stats["path-length"], np.inf, np.inf),
             # "enemies-near-key": get_range_reward(new_stats["enemies-near-key"],old_stats["enemies-near-key"],1, 4),
             # "enemies-near-door": get_range_reward(new_stats["enemies-near-door"],old_stats["enemies-near-door"],1, 4)
         }
@@ -186,21 +186,7 @@ class ZeldaProblem(Problem):
             rewards["path-length"] * self._rewards["path-length"] 
             # rewards["enemies-near-key"] * self._rewards["enemies-near-key"] +\
             # rewards["enemies-near-door"] * self._rewards["enemies-near-door"]
-        # print("Player Reward:",rewards["player"])
-        # print("key Reward:",rewards["key"])
-        # print("door Reward:",rewards["door"])
-        # print("enemies near door", rewards["enemies-near-door"])
-        # print("enemies near key", rewards["enemies-near-key"])
-        # print("enemies Reward:", rewards["enemies"] * self._rewards["enemies"])
-        # print("regions Reward:",rewards["regions"] * self._rewards["regions"])
-        # print("nearest-enemy Reward:", rewards["nearest-enemy"] * self._rewards["nearest-enemy"])
-        # print("path Reward:",rewards["path-length"] * self._rewards["path-length"])
-        # print("enemies near key: ", rewards["enemies-near-key"]*self._rewards["enemies-near-key"])
-        # print("NUM enemies near key", new_stats["enemies-near-key"])
-        # print("enemies near door: ", rewards["enemies-near-door"]*self._rewards["enemies-near-door"])
-        # print("NUM enemies near door", new_stats["enemies-near-door"])
-        # print("Path length: ", rewards["path-length"]*self._rewards["path-length"])
-        # print("Total Reward: ",reward)
+       
        
         return reward
 
